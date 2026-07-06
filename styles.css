@@ -131,7 +131,7 @@ a {
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 }
 
-/* the memorial title steps aside while a photo is being viewed */
+/* the title steps aside while a photo is being viewed */
 body.flying #site-header,
 body.matched #site-header {
   opacity: 0;
