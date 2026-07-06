@@ -8,8 +8,9 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { buildScene } from './scene.js';
 import { initTricks, updateTricks } from './tricks.js';
-import { initTune } from './tune.js';
 import { initHistory } from './history.js';
+// NOTE: tune.js (the match tuner) is intentionally NOT imported at the top.
+// It's a local-only dev tool — see the gated dynamic import below.
 
 // dev: surface uncaught errors on-page (headless screenshots can't read console)
 function showError(msg) {
@@ -87,8 +88,17 @@ window.addEventListener('resize', () => {
 
 const ctx = { scene, camera, controls, renderer };
 initTricks(ctx);
-initTune(ctx); // dev match-tuning panel, only activates with ?tune=1
 initHistory();
+
+// Match tuner: LOCAL-ONLY dev tool. It's never fetched or run on the
+// deployed site (nothing to protect there — no backend/data, and it can't
+// mutate the deploy — it just shouldn't ship). On localhost, ?tune=1 still
+// loads it on demand for re-tuning. This is the no-build equivalent of
+// "drop it from the production bundle".
+const onLocalhost = ['localhost', '127.0.0.1'].includes(location.hostname);
+if (onLocalhost && new URLSearchParams(location.search).get('tune')) {
+  import('./tune.js').then(m => m.initTune(ctx)).catch(() => {});
+}
 
 // paint the first frame synchronously so the canvas is never blank at
 // the load event (matters for screenshots and perceived startup)
