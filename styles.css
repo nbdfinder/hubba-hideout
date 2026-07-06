@@ -74,8 +74,9 @@ a {
 .brand-wordmark {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 22px;
+  font-size: 24px;
   letter-spacing: 1px;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 .brand-wordmark .bw-nbd { color: #fff; }
@@ -100,6 +101,10 @@ a {
 
 @media (max-width: 720px) {
   .brand-slogan { display: none; }
+}
+
+@media (max-width: 600px) {
+  .brand-wordmark { font-size: 18px; }
 }
 
 /* ---------- bottom trick bar ---------- */
