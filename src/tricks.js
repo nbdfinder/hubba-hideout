@@ -36,6 +36,33 @@ export function orientPhotoPlane(mesh, viewDir, tiltDeg) {
   mesh.rotateZ(-((tiltDeg || 0) * Math.PI) / 180);
 }
 
+// Vertical FOV that keeps the whole matched photo inside the frame for the
+// current viewport. On wide/landscape screens this returns the hand-tuned
+// match.fov unchanged (desktop untouched); on narrow/portrait phones the
+// photo's width would otherwise overflow the frame and the sides get cropped,
+// so we widen the FOV until the full width fits (letterboxing top/bottom
+// instead). Clamped to never go below match.fov, so photo-over-model
+// alignment holds (a uniform FOV change scales photo + model together) and it
+// can only ever reveal MORE of the photo than today, never less.
+function fovForMatch(m) {
+  const A = window.innerWidth / window.innerHeight;
+  const C = new THREE.Vector3(...m.cameraPos);
+  const dir = new THREE.Vector3(...m.lookAt).sub(C).normalize();
+  const camRight = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize();
+  const P = m.photoPos
+    ? new THREE.Vector3(...m.photoPos)
+    : C.clone().addScaledVector(dir, m.planeDist ?? 6);
+  const V = P.clone().sub(C);
+  const dAxis = V.dot(dir);
+  if (!(dAxis > 0.01)) return m.fov;
+  const scale = m.photoScale ?? 1;
+  const H = (m.photoHeight ?? 2 * dAxis * Math.tan(THREE.MathUtils.degToRad(m.fov) / 2)) * scale;
+  const W = H * m.aspect;
+  const halfW = Math.abs(V.dot(camRight)) + W / 2; // camera-space half-width, incl. off-axis offset
+  const fitFov = THREE.MathUtils.radToDeg(2 * Math.atan((halfW * 1.05) / (dAxis * A)));
+  return Math.max(m.fov, fitFov);
+}
+
 // The photo is NOT locked to the camera: it hangs in world space at the
 // spot. Placement comes from match.photoPos/photoHeight when present
 // (the tune tool emits these); otherwise the legacy form — the plane
@@ -142,7 +169,7 @@ function flyTo(trick) {
   startTween(
     new THREE.Vector3(...trick.match.cameraPos),
     new THREE.Vector3(...trick.match.lookAt),
-    trick.match.fov,
+    fovForMatch(trick.match),
     ((trick.match.roll || 0) * Math.PI) / 180,
     1700,
     'matched',
@@ -181,6 +208,15 @@ export function initTricks(ctx) {
 
   document.getElementById('back-btn').addEventListener('click', goBack);
 
+  // keep the matched photo fully framed when the viewport changes
+  // (orientation flip, mobile URL bar show/hide)
+  window.addEventListener('resize', () => {
+    if (state.mode === 'matched' && state.matchedTrick) {
+      state.ctx.camera.fov = fovForMatch(state.matchedTrick.match);
+      state.ctx.camera.updateProjectionMatrix();
+    }
+  });
+
   // dev helpers: ?fly=<trick-id> runs the photo-match flight,
   // ?snap=<trick-id> jumps to the matched view instantly (no tween)
   const params = new URLSearchParams(location.search);
@@ -196,7 +232,7 @@ export function initTricks(ctx) {
       controls.enabled = false;
       camera.position.set(...t.match.cameraPos);
       controls.target.set(...t.match.lookAt);
-      camera.fov = t.match.fov;
+      camera.fov = fovForMatch(t.match);
       camera.updateProjectionMatrix();
       camera.lookAt(controls.target);
       state.roll = ((t.match.roll || 0) * Math.PI) / 180;
