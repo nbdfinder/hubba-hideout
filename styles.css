@@ -102,42 +102,6 @@ a {
   .brand-slogan { display: none; }
 }
 
-/* ---------- page title ---------- */
-
-#site-header {
-  position: fixed;
-  top: 56px;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  padding: 16px 24px;
-  pointer-events: none;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
-  transition: opacity 0.4s ease;
-}
-
-#site-header h1 {
-  color: var(--text-main);
-  font-size: 34px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
-}
-
-#site-header h1 .hh-name {
-  color: var(--neon-green);
-}
-
-@media (max-width: 600px) {
-  #site-header h1 { font-size: 26px; }
-}
-
-/* the title steps aside while a photo is being viewed */
-body.flying #site-header,
-body.matched #site-header {
-  opacity: 0;
-}
-
 /* ---------- bottom trick bar ---------- */
 
 #trick-bar {
