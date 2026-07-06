@@ -64,7 +64,7 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  padding: 9px 18px;
+  padding: 12px 20px;
   background: rgba(10, 12, 15, 0.82);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
@@ -74,7 +74,7 @@ a {
 .brand-wordmark {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 16px;
+  font-size: 22px;
   letter-spacing: 1px;
   white-space: nowrap;
 }
@@ -106,7 +106,7 @@ a {
 
 #site-header {
   position: fixed;
-  top: 40px;
+  top: 56px;
   left: 0;
   right: 0;
   z-index: 10;
@@ -118,17 +118,18 @@ a {
 
 #site-header h1 {
   color: var(--text-main);
-  font-size: 30px;
+  font-size: 34px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
 }
 
-#site-header .page-sub {
-  margin-top: 3px;
-  font-size: 12.5px;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+#site-header h1 .hh-name {
+  color: var(--neon-green);
+}
+
+@media (max-width: 600px) {
+  #site-header h1 { font-size: 26px; }
 }
 
 /* the title steps aside while a photo is being viewed */
@@ -231,7 +232,7 @@ body.snap #trick-bar {
 #back-btn,
 #info-btn {
   position: fixed;
-  top: 56px;
+  top: 62px;
   z-index: 30;
   font: inherit;
   font-size: 13px;
