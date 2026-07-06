@@ -342,3 +342,66 @@ body.matched #back-btn {
 #history-close:hover {
   color: var(--neon-green);
 }
+
+/* ---------- analytics consent bar (opt-in) ---------- */
+
+#consent-bar {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(140px + env(safe-area-inset-bottom));
+  z-index: 55;
+  padding: 12px 16px;
+  background: var(--bg-panel-solid);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-glass);
+  border-top: 2px solid var(--neon-green);
+  border-radius: 12px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.55);
+}
+
+#consent-bar .consent-text {
+  display: block;
+}
+
+#consent-bar a {
+  color: var(--neon-green);
+}
+
+#consent-bar .consent-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+#consent-bar button {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 12.5px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid var(--border-glass);
+  background: transparent;
+  color: var(--text-main);
+  transition: background 0.15s, border-color 0.15s, filter 0.15s;
+}
+
+#consent-bar #consent-decline:hover {
+  border-color: var(--text-muted);
+}
+
+#consent-bar #consent-accept {
+  background: var(--neon-green);
+  color: #0a0c10;
+  border-color: var(--neon-green);
+}
+
+#consent-bar #consent-accept:hover {
+  filter: brightness(1.08);
+}
