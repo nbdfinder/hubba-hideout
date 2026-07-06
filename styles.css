@@ -1,3 +1,20 @@
+:root {
+  /* NBD Finder brand tokens */
+  --bg-dark: #0f1115;                          /* page background (near-black) */
+  --bg-panel: rgba(22, 25, 31, 0.7);           /* glassy panels */
+  --bg-panel-solid: rgba(15, 17, 21, 0.95);
+  --neon-green: #00ff88;                        /* PRIMARY accent */
+  --neon-blue: #00e5ff;                         /* secondary accent */
+  --neon-pink: #ff007f;
+  --neon-orange: #f59e0b;
+  --text-main: #ffffff;
+  --text-muted: #b0b6bc;
+  --border-glass: rgba(255, 255, 255, 0.1);
+  --shadow-glow: 0 0 20px rgba(0, 255, 136, 0.4); /* signature green glow */
+  --font-heading: "Outfit", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -9,8 +26,22 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background: #0e0e0e;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-body);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+a {
+  color: var(--neon-green);
+  text-decoration: none;
 }
 
 #scene-canvas {
@@ -21,24 +52,89 @@ body {
   display: block;
 }
 
-#site-header {
+/* ---------- NBD Finder brand bar (slim top strip) ---------- */
+
+#brand-bar {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 9px 18px;
+  background: rgba(10, 12, 15, 0.82);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.brand-wordmark {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+.brand-wordmark .bw-nbd { color: #fff; }
+.brand-wordmark .bw-finder { color: var(--neon-green); }
+.brand-wordmark:hover .bw-finder { text-shadow: var(--shadow-glow); }
+
+.brand-slogan {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.brand-backlink {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.brand-backlink:hover { color: var(--neon-green); }
+
+@media (max-width: 720px) {
+  .brand-slogan { display: none; }
+}
+
+/* ---------- page title ---------- */
+
+#site-header {
+  position: fixed;
+  top: 40px;
+  left: 0;
+  right: 0;
   z-index: 10;
-  padding: 18px 24px;
+  padding: 16px 24px;
   pointer-events: none;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+  transition: opacity 0.4s ease;
 }
 
 #site-header h1 {
-  color: #f2f2f2;
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  color: var(--text-main);
+  font-size: 30px;
   text-transform: uppercase;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+}
+
+#site-header .page-sub {
+  margin-top: 3px;
+  font-size: 12.5px;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* the memorial title steps aside while a photo is being viewed */
+body.flying #site-header,
+body.matched #site-header {
+  opacity: 0;
 }
 
 /* ---------- bottom trick bar ---------- */
@@ -54,7 +150,7 @@ body {
   justify-content: center;
   align-items: flex-end;
   padding: 26px 16px 16px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0));
   transition: opacity 0.4s;
 }
 
@@ -62,17 +158,19 @@ body {
   font: inherit;
   text-align: left;
   cursor: pointer;
-  color: #ececec;
-  background: rgba(18, 18, 18, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 6px;
+  color: var(--text-main);
+  background: var(--bg-panel);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
   padding: 9px 14px;
-  transition: background 0.15s, color 0.15s, transform 0.15s;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.15s;
 }
 
 .trick:hover {
-  background: #f2f2f2;
-  color: #111;
+  background: rgba(30, 34, 41, 0.85);
+  border-color: rgba(0, 255, 136, 0.6);
   transform: translateY(-2px);
 }
 
@@ -82,15 +180,16 @@ body {
 }
 
 .trick.disabled:hover {
-  background: rgba(18, 18, 18, 0.72);
-  color: #ececec;
+  background: var(--bg-panel);
+  border-color: var(--border-glass);
   transform: none;
 }
 
 .t-name {
   display: block;
+  font-family: var(--font-heading);
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -98,28 +197,28 @@ body {
 .t-meta {
   display: block;
   font-size: 12px;
-  opacity: 0.7;
+  color: var(--text-muted);
   margin-top: 2px;
 }
 
 .t-photog {
   display: block;
   font-size: 11px;
-  opacity: 0.5;
+  color: var(--text-muted);
+  opacity: 0.75;
   margin-top: 1px;
 }
 
-/* the trick being viewed (or flown to) */
+/* the trick being viewed (or flown to) — neon-outline, green glow */
 .trick.active {
-  background: #f2f2f2;
-  color: #111;
-  border-color: #fff;
+  background: rgba(0, 255, 136, 0.12);
+  border-color: var(--neon-green);
+  box-shadow: var(--shadow-glow);
   transform: translateY(-2px);
 }
 
-.trick.active .t-meta,
-.trick.active .t-photog {
-  opacity: 0.65;
+.trick.active .t-name {
+  color: var(--neon-green);
 }
 
 /* ---------- matched view chrome ---------- */
@@ -129,26 +228,38 @@ body.snap #trick-bar {
   transition: none;
 }
 
-#back-btn {
+#back-btn,
+#info-btn {
   position: fixed;
-  top: 70px;
-  left: 18px;
+  top: 56px;
   z-index: 30;
-  display: none;
   font: inherit;
-  font-size: 14px;
-  color: #f2f2f2;
-  background: rgba(18, 18, 18, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text-main);
+  background: var(--bg-panel);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
   padding: 9px 14px;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
 
-#back-btn:hover {
-  background: #f2f2f2;
-  color: #111;
+#back-btn:hover,
+#info-btn:hover {
+  color: var(--neon-green);
+  border-color: rgba(0, 255, 136, 0.6);
+  box-shadow: var(--shadow-glow);
+}
+
+#back-btn {
+  left: 18px;
+  display: none;
+}
+
+#info-btn {
+  right: 18px;
 }
 
 body.matched #back-btn {
@@ -156,27 +267,6 @@ body.matched #back-btn {
 }
 
 /* ---------- history popup ---------- */
-
-#info-btn {
-  position: fixed;
-  top: 70px;
-  right: 18px;
-  z-index: 30;
-  font: inherit;
-  font-size: 13px;
-  color: #f2f2f2;
-  background: rgba(18, 18, 18, 0.78);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 6px;
-  padding: 8px 13px;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-
-#info-btn:hover {
-  background: #f2f2f2;
-  color: #111;
-}
 
 #history-modal {
   position: fixed;
@@ -193,7 +283,9 @@ body.matched #back-btn {
 #history-scrim {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.62);
+  background: rgba(0, 0, 0, 0.66);
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
 }
 
 #history-card {
@@ -204,30 +296,36 @@ body.matched #back-btn {
   width: min(600px, calc(100vw - 48px));
   max-height: 78vh;
   overflow-y: auto;
-  background: rgba(15, 15, 15, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 10px;
+  background: var(--bg-panel-solid);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-top: 2px solid var(--neon-green);
+  border-radius: 12px;
   padding: 28px 32px 24px;
   color: #e8e8e8;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.6);
 }
 
 #history-card h2 {
-  font-size: 21px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  font-size: 22px;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-main);
 }
 
 .h-sub {
   font-size: 12px;
   letter-spacing: 0.05em;
-  opacity: 0.55;
-  margin: 5px 0 16px;
+  color: var(--neon-green);
+  opacity: 0.85;
+  margin: 6px 0 16px;
 }
 
 #history-card p:not(.h-sub) {
   font-size: 14px;
   line-height: 1.65;
+  color: var(--text-muted);
   margin: 0 0 12px;
 }
 
@@ -242,8 +340,9 @@ body.matched #back-btn {
   line-height: 1;
   cursor: pointer;
   padding: 4px;
+  transition: color 0.15s;
 }
 
 #history-close:hover {
-  color: #fff;
+  color: var(--neon-green);
 }

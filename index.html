@@ -3,7 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NBD: Hubba Hideout</title>
+  <title>Hubba Hideout — NBD Finder</title>
+  <meta name="description" content="A 3D memorial to Hubba Hideout, one of skateboarding's most legendary spots. Part of NBD Finder." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Hubba Hideout — NBD Finder" />
+  <meta property="og:description" content="Explore a 3D tribute to the legendary Hubba Hideout." />
+  <!-- Tyler to drop a matched-view capture here at /assets/og-hubba.jpg (1200x630) -->
+  <meta property="og:image" content="/assets/og-hubba.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Favicon: placeholder NBD "N" mark. Swap for the real asset once
+       dropped: <link rel="icon" href="assets/brand/nbd-finder-n.svg" /> -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230f1115'/%3E%3Ctext x='16' y='24' font-family='Arial,sans-serif' font-size='22' font-weight='800' text-anchor='middle' fill='%2300ff88'%3EN%3C/text%3E%3C/svg%3E" />
+
+  <!-- Brand fonts (Outfit headings / Inter body) — same CDN NBD Finder uses.
+       To restore this site's zero-network property, self-host the OFL .woff2
+       files instead; the CSS font stacks fall back to system fonts either way. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="styles.css" />
   <script type="importmap">
     {
@@ -15,8 +34,19 @@
   </script>
 </head>
 <body>
+  <!-- NBD Finder chrome: slim top bar tying the memorial to the parent site -->
+  <nav id="brand-bar">
+    <!-- Swap the text wordmark for assets/brand/nbd-finder-logo.svg once dropped -->
+    <a class="brand-wordmark" href="https://nbdfinder.com" aria-label="NBD Finder home">
+      <span class="bw-nbd">NBD</span><span class="bw-finder">FINDER</span>
+    </a>
+    <span class="brand-slogan">Find Spots. Land Tricks. Get Paid.</span>
+    <a class="brand-backlink" href="https://nbdfinder.com/spot/hubba-hideout">&larr; Hubba Hideout on NBD Finder</a>
+  </nav>
+
   <header id="site-header">
-    <h1>NBD: Hubba Hideout</h1>
+    <h1>Hubba Hideout</h1>
+    <p class="page-sub">Legendary spot &middot; San Francisco &middot; demolished 2011</p>
   </header>
 
   <canvas id="scene-canvas"></canvas>
