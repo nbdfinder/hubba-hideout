@@ -117,14 +117,31 @@ a {
   z-index: 10;
   display: flex;
   gap: 10px;
-  justify-content: center;
-  align-items: flex-end;
-  padding: 26px 16px 16px;
+  justify-content: safe center;
+  align-items: stretch;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  padding: 26px 16px 18px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0));
   transition: opacity 0.4s;
 }
 
+#trick-bar::-webkit-scrollbar {
+  display: none;
+}
+
 .trick {
+  flex: 0 0 180px;
+  width: 180px;
+  height: 84px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  scroll-snap-align: start;
   font: inherit;
   text-align: left;
   cursor: pointer;
@@ -156,7 +173,10 @@ a {
 }
 
 .t-name {
-  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   font-family: var(--font-heading);
   font-size: 13px;
   font-weight: 600;
@@ -169,6 +189,9 @@ a {
   font-size: 12px;
   color: var(--text-muted);
   margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .t-photog {
@@ -177,6 +200,9 @@ a {
   color: var(--text-muted);
   opacity: 0.75;
   margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* the trick being viewed (or flown to) — neon-outline, green glow */
