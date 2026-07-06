@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NBD: Hubba Hideout</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "./vendor/three.module.js",
+        "three/addons/controls/OrbitControls.js": "./vendor/OrbitControls.js"
+      }
+    }
+  </script>
+</head>
+<body>
+  <header id="site-header">
+    <h1>NBD: Hubba Hideout</h1>
+  </header>
+
+  <canvas id="scene-canvas"></canvas>
+
+  <nav id="trick-bar" aria-label="Tricks"></nav>
+
+  <button id="back-btn" type="button">&larr; Back to the spot</button>
+
+  <button id="info-btn" type="button" aria-label="About Hubba Hideout">&#9432; History</button>
+
+  <div id="history-modal" hidden>
+    <div id="history-scrim"></div>
+    <div id="history-card" role="dialog" aria-modal="true" aria-labelledby="history-title">
+      <button id="history-close" type="button" aria-label="Close">&times;</button>
+      <h2 id="history-title">Hubba Hideout</h2>
+      <p class="h-sub">Embarcadero &middot; San Francisco &middot; demolished January 2011</p>
+      <p>Hubba Hideout was a world-famous street skateboarding location situated near the Embarcadero Plaza in San Francisco, California, which originally featured a concrete pedestrian footbridge built during a mid-1950s urban renewal program. The structure consisted of two oversized sets of six concrete stairs flanked on both sides by large, unadorned cast-concrete ledges that sat against a backdrop of downtown commercial buildings.</p>
+      <p>The location earned its nickname because its secluded design made it a discreet gathering place for illicit substance use, using the regional Bay Area street slang word &ldquo;hubba&rdquo; for crack cocaine. Skateboarders began utilizing the unique concrete ledges in the late 1980s and early 1990s, and the global media exposure of the spot eventually turned the word &ldquo;hubba&rdquo; into a standard international skateboarding term used to describe any concrete ledge that runs down alongside a set of stairs.</p>
+      <p>Over the years, the city of San Francisco made numerous structural modifications to deter skateboarding at the site, including the installation of dirt gaps and L-shaped metal brackets known as &ldquo;skate stoppers,&rdquo; before city workers completely demolished the pedestrian walkway, stairs, and ledges permanently in January 2011.</p>
+    </div>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #0e0e0e;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#scene-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  padding: 18px 24px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0));
+}
+
+#site-header h1 {
+  color: #f2f2f2;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+/* ---------- bottom trick bar ---------- */
+
+#trick-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 26px 16px 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
+  transition: opacity 0.4s;
+}
+
+.trick {
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  color: #ececec;
+  background: rgba(18, 18, 18, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  padding: 9px 14px;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+}
+
+.trick:hover {
+  background: #f2f2f2;
+  color: #111;
+  transform: translateY(-2px);
+}
+
+.trick.disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.trick.disabled:hover {
+  background: rgba(18, 18, 18, 0.72);
+  color: #ececec;
+  transform: none;
+}
+
+.t-name {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.t-meta {
+  display: block;
+  font-size: 12px;
+  opacity: 0.7;
+  margin-top: 2px;
+}
+
+.t-photog {
+  display: block;
+  font-size: 11px;
+  opacity: 0.5;
+  margin-top: 1px;
+}
+
+/* the trick being viewed (or flown to) */
+.trick.active {
+  background: #f2f2f2;
+  color: #111;
+  border-color: #fff;
+  transform: translateY(-2px);
+}
+
+.trick.active .t-meta,
+.trick.active .t-photog {
+  opacity: 0.65;
+}
+
+/* ---------- matched view chrome ---------- */
+
+/* dev ?snap= jumps: no fades, so headless screenshots are deterministic */
+body.snap #trick-bar {
+  transition: none;
+}
+
+#back-btn {
+  position: fixed;
+  top: 70px;
+  left: 18px;
+  z-index: 30;
+  display: none;
+  font: inherit;
+  font-size: 14px;
+  color: #f2f2f2;
+  background: rgba(18, 18, 18, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  padding: 9px 14px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+#back-btn:hover {
+  background: #f2f2f2;
+  color: #111;
+}
+
+body.matched #back-btn {
+  display: block;
+}
+
+/* ---------- history popup ---------- */
+
+#info-btn {
+  position: fixed;
+  top: 70px;
+  right: 18px;
+  z-index: 30;
+  font: inherit;
+  font-size: 13px;
+  color: #f2f2f2;
+  background: rgba(18, 18, 18, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  padding: 8px 13px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+#info-btn:hover {
+  background: #f2f2f2;
+  color: #111;
+}
+
+#history-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+#history-modal.open {
+  opacity: 1;
+}
+
+#history-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.62);
+}
+
+#history-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(600px, calc(100vw - 48px));
+  max-height: 78vh;
+  overflow-y: auto;
+  background: rgba(15, 15, 15, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 10px;
+  padding: 28px 32px 24px;
+  color: #e8e8e8;
+}
+
+#history-card h2 {
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.h-sub {
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  opacity: 0.55;
+  margin: 5px 0 16px;
+}
+
+#history-card p:not(.h-sub) {
+  font-size: 14px;
+  line-height: 1.65;
+  margin: 0 0 12px;
+}
+
+#history-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+}
+
+#history-close:hover {
+  color: #fff;
+}
